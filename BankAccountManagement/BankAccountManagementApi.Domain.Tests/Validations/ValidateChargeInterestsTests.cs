@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.ChargeInterestsInvalidBankId, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyBankId, validationResult.Errors[0].ErrorCode);
         }
     }
 }

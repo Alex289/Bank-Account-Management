@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.NewBankInvalidBankId, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyBankId, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.NewBankInvalidBankName, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyBankName, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
             
-            Assert.Equal(ValidationErrorCodes.NewBankInvalidBankName, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.TooManyCharacters, validationResult.Errors[0].ErrorCode);
         }
     }
 }

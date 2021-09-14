@@ -16,16 +16,16 @@ namespace BankAccountManagementApi.Domain.Validations
         {
             RuleFor(cmd => cmd.BankID)
                 .NotEmpty()
-                .WithErrorCode(ValidationErrorCodes.NewBankInvalidBankId);
+                .WithErrorCode(ValidationErrorCodes.EmptyBankId);
         }
 
         protected void AddRuleForBankName()
         {
             RuleFor(cmd => cmd.BankName)
                 .NotEmpty()
-                .WithErrorCode(ValidationErrorCodes.NewBankInvalidBankName)
+                .WithErrorCode(ValidationErrorCodes.EmptyBankName)
                 .MaximumLength(50)
-                .WithErrorCode(ValidationErrorCodes.NewBankInvalidBankName);
+                .WithErrorCode(ValidationErrorCodes.TooManyCharacters);
         }
     }
 }

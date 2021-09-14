@@ -1,8 +1,11 @@
 ﻿using BankAccountManagementApi.Domain.CommandHandlers;
 using BankAccountManagementApi.Domain.Commands.Bank;
 using BankAccountManagementApi.Domain.Entities;
+using BankAccountManagementApi.Domain.Errors;
 using BankAccountManagementApi.Domain.Events;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
+using BankAccountManagementApi.Domain.Notifications;
 using MediatR;
 using Moq;
 using System;
@@ -16,7 +19,9 @@ namespace BankAccountManagementApi.Domain.Tests
     public class ChargeInterestsCommandTests
     {
         private readonly Mock<IMediator> _bus;
+        private readonly Mock<IUnitOfWork> _uow;
         private readonly BankCommandHandler _bankCommandHandler;
+        private readonly Mock<DomainNotificationHandler> _notificationHandler;
         private readonly Mock<IBankRepository> _bankRepository;
         private readonly Mock<IAccountRepository> _accountRepository;
         private readonly Guid _mockAccountID = Guid.Parse("1B4156A7-222E-4113-BC11-479DF7C01AD5");
@@ -25,16 +30,20 @@ namespace BankAccountManagementApi.Domain.Tests
         public ChargeInterestsCommandTests()
         {
             _bus = new Mock<IMediator>();
+            _uow = new Mock<IUnitOfWork>();
             _bankRepository = new Mock<IBankRepository>();
             _accountRepository = new Mock<IAccountRepository>();
+            _notificationHandler = new Mock<DomainNotificationHandler>();
 
-            _bankCommandHandler = new BankCommandHandler(_bankRepository.Object, _accountRepository.Object, _bus.Object);
+            _uow.Setup(x => x.CommitAsync()).ReturnsAsync(true);
+
+            _bankCommandHandler = new BankCommandHandler(_bus.Object, _uow.Object, _notificationHandler.Object, _bankRepository.Object, _accountRepository.Object);
 
             var accountList = new List<Account>();
             var newAccount = new Account() { AccountID = _mockAccountID, BankID = _mockBankID, InterestLimit = -111, Interests = 0.2, Money = -8 };
             accountList.Add(newAccount);
 
-            _accountRepository.Setup(a => a.GetByBankId(_mockBankID)).Returns(accountList);
+            _accountRepository.Setup(a => a.GetByBankIdAsync(_mockBankID)).ReturnsAsync(accountList);
         }
 
         [Fact]
@@ -49,7 +58,7 @@ namespace BankAccountManagementApi.Domain.Tests
             // Assert
             _bus.Verify(x => x.Publish(It.Is<ChargedInterestsEvent>(b => b.ChargedAccountsNumber == chargedAccountsNumber), CancellationToken.None));
 
-            _accountRepository.Verify(x => x.SaveChanges());
+            _uow.Verify(x => x.CommitAsync());
 
             Assert.Equal(1, chargedAccountsNumber);
         }
@@ -66,7 +75,9 @@ namespace BankAccountManagementApi.Domain.Tests
             // Assert
             _bus.Verify(x => x.Publish(It.Is<ChargedInterestsEvent>(b => b.ChargedAccountsNumber == chargedAccountsNumber), CancellationToken.None), Times.Never);
 
-            _accountRepository.Verify(x => x.SaveChanges(), Times.Never);
+            _uow.Verify(x => x.CommitAsync(), Times.Never);
+
+            _bus.Verify(x => x.Publish(It.Is<DomainNotification>(n => n.Key == ValidationErrorCodes.EmptyBankId), CancellationToken.None));
 
             Assert.Equal(0, chargedAccountsNumber);
         }

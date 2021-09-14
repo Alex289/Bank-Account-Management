@@ -1,9 +1,11 @@
 ﻿using BankAccountManagementApi.Domain.Entities;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
 using BankAccountManagementApi.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BankAccountManagementApi.Infrastructure.Repository
 {
@@ -16,10 +18,9 @@ namespace BankAccountManagementApi.Infrastructure.Repository
             _context = context;
         }
 
-        public void AddAccount(Account account)
+        public async Task AddAccountAsync(Account account)
         {
-            _context.Account.Add(account);
-            _context.SaveChanges();
+            await _context.Account.AddAsync(account);
         }
 
         public IQueryable<Account> GetAll()
@@ -27,21 +28,16 @@ namespace BankAccountManagementApi.Infrastructure.Repository
             return _context.Account;
         }
 
-        public Account GetById(Guid accountId)
+        public async Task<Account> GetByIdAsync(Guid accountId)
         {
-            return _context.Account.Where(item => item.AccountID == accountId)
-                .FirstOrDefault();
+            return await _context.Account.Where(item => item.AccountID == accountId)
+                .FirstOrDefaultAsync();
         }
 
-        public List<Account> GetByBankId(Guid bankId)
+        public async Task<List<Account>> GetByBankIdAsync(Guid bankId)
         {
-            return _context.Account.Where(item => item.BankID == bankId)
-                .ToList();
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
+            return await _context.Account.Where(item => item.BankID == bankId)
+                .ToListAsync();
         }
     }
 }

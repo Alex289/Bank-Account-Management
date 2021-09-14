@@ -8,24 +8,23 @@ namespace BankAccountManagementApi.Domain.Errors
 {
     public static class ValidationErrorCodes
     {
-        // Charge interests
-        public const string ChargeInterestsInvalidBankId = "CHARGE_INTERESTS_INVALID_BANK_ID";
+        // General
+        public const string EmptyAccountId = "INVALID_EMPTY_ACCOUNT_ID";
+        public const string EmptyBankId = "INVALID_EMPTY_BANK_ID";
 
-        // Deposit
-        public const string DepositInvalidAccountId = "DEPOSIT_INVALID_ACCOUNT_ID";
-        public const string DepositInvalidAmount = "DEPOSIT_INVALID_AMOUNT";
+        // Deposit/Withdraw
+        public const string EmptyAmount = "INVALID_EMPTY_AMOUNT";
+        public const string TooLowAmount = "INVALID_TOO_LOW_AMOUNT";
+        public const string TooHighAmount = "INVALID_TOO_HIGH_AMOUNT";
 
         // New account
-        public const string NewAccountInvalidBankId = "CREATE_NEW_ACCOUNT_INVALID_BANK_ID";
-        public const string NewAccountInvalidInterestLimit = "CREATE_NEW_ACCOUNT_INVALID_INTEREST_LIMIT";
-        public const string NewAccountInvalidInterests = "CREATE_NEW_ACCOUNT_INVALID_INTERESTS";
+        public const string EmptyInterestLimit = "INVALID_EMPTY_INTEREST_LIMIT";
+        public const string BetweenInterestLimit = "INVALID_INTEREST_LIMIT_BETWEEN_0_AND_-1000";
 
+        public const string EmptyInterests = "INVALID_EMPTY_INTERESTS";
+        public const string BetweenInterests = "INVALID_INTERESTS_BETWEEN_0_AND_15";
         // New bank
-        public const string NewBankInvalidBankId = "NEW_BANK_INVALID_BANK_ID";
-        public const string NewBankInvalidBankName = "CREATE_NEW_BANK_INVALID_BANK_NAME";
-
-        // Withdraw
-        public const string WithdrawInvalidAccountId = "WITHDRAW_INVALID_BANK_ID";
-        public const string WithdrawInvalidAmount = "WITHDRAW_INVALID_AMOUNT";
+        public const string EmptyBankName = "INVALID_EMPTY_BANK_NAME";
+        public const string TooManyCharacters = "INVALID_TOO_MANY_CHARACTERS_BANK_NAME";
     }
 }

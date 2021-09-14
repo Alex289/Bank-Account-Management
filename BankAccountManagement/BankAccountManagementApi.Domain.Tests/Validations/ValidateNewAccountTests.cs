@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.NewAccountInvalidBankId, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyBankId, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.NewAccountInvalidInterestLimit, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.BetweenInterestLimit, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.NewAccountInvalidInterestLimit, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.BetweenInterestLimit, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
          
-            Assert.Equal(ValidationErrorCodes.NewAccountInvalidInterests, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.BetweenInterests, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
          
-            Assert.Equal(ValidationErrorCodes.NewAccountInvalidInterests, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.BetweenInterests, validationResult.Errors[0].ErrorCode);
         }
     }
 }

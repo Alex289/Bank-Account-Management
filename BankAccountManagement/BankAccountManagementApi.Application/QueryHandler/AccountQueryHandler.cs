@@ -1,7 +1,8 @@
 ﻿using BankAccountManagementApi.Application.Queries.Account;
 using BankAccountManagementApi.Application.ViewModels;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace BankAccountManagementApi.Application.QueryHandler
 
         public async Task<List<AccountListViewModel>> Handle(GetAllAccountsQuery request, CancellationToken cancellationToken)
         {
-            var list = _accountRepository.GetAll()
+            var list = await _accountRepository.GetAll()
                 .Select(item => new AccountListViewModel
                 {
                     AccountID = item.AccountID,
@@ -30,14 +31,14 @@ namespace BankAccountManagementApi.Application.QueryHandler
                     Interests = item.Interests,
                     BankID = item.BankID
                 })
-                .ToList();
+                .ToListAsync(cancellationToken: cancellationToken);
 
             return list;
         }
 
         public async Task<AccountListViewModel> Handle(GetAccountsByIdQuery request, CancellationToken cancellationToken)
         {
-            var acc = _accountRepository.GetAll()
+            var acc = await _accountRepository.GetAll()
                 .Where(item => item.AccountID == request.AccountID)
                 .Select(item => new AccountListViewModel
                 {
@@ -47,14 +48,14 @@ namespace BankAccountManagementApi.Application.QueryHandler
                     Interests = item.Interests,
                     BankID = item.BankID
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
             return acc;
         }
 
         public async Task<List<AccountListViewModel>> Handle(GetAccountByBankIdQueryAsync request, CancellationToken cancellationToken)
         {
-            var list = _accountRepository.GetAll()
+            var list = await _accountRepository.GetAll()
                 .Where(item => item.BankID == request.BankId)
                 .Select(item => new AccountListViewModel
                 {
@@ -64,7 +65,7 @@ namespace BankAccountManagementApi.Application.QueryHandler
                     Interests = item.Interests,
                     BankID = item.BankID
                 })
-                .ToList();
+                .ToListAsync(cancellationToken: cancellationToken);
 
             return list;
         }

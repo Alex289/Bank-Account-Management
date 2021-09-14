@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.WithdrawInvalidAccountId, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyAccountId, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -29,7 +29,19 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.WithdrawInvalidAmount, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.TooLowAmount, validationResult.Errors[0].ErrorCode);
+        }
+
+        [Fact]
+        public void Should_Not_Validate_Too_High_Amount()
+        {
+            var depositCommand = new WithdrawCommand(Guid.NewGuid(), 1001);
+            var validator = new ValidateWithdrawCommand();
+            var validationResult = validator.Validate(depositCommand);
+
+            Assert.False(validationResult.IsValid);
+
+            Assert.Equal(ValidationErrorCodes.TooHighAmount, validationResult.Errors[0].ErrorCode);
         }
     }
 }

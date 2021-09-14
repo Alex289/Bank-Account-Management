@@ -9,7 +9,10 @@ using BankAccountManagementApi.Domain.Commands.Account;
 using BankAccountManagementApi.Domain.Commands.Bank;
 using BankAccountManagementApi.Domain.EventHandler;
 using BankAccountManagementApi.Domain.Events;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
+using BankAccountManagementApi.Domain.Notifications;
+using BankAccountManagementApi.Infrastructure;
 using BankAccountManagementApi.Infrastructure.Data;
 using BankAccountManagementApi.Infrastructure.Repository;
 using MediatR;
@@ -50,6 +53,11 @@ namespace BankAccountManagementApi
             services.AddControllersWithViews();
 
             services.AddMediatR(typeof(Startup).Assembly);
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Domain events
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             // Bank commands and events
             services.AddScoped<IRequestHandler<CreateNewBankCommand, Guid>, BankCommandHandler>();

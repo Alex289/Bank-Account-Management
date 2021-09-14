@@ -1,7 +1,8 @@
 ﻿using BankAccountManagementApi.Application.Queries.Bank;
 using BankAccountManagementApi.Application.ViewModels;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,13 +21,13 @@ namespace BankAccountManagementApi.Application.QueryHandler
 
         public async Task<List<BankListViewModel>> Handle(GetAllBanksQuery request, CancellationToken cancellationToken)
         {
-            List<BankListViewModel> bankListQuery = _bankRepository.GetAll()
+            List<BankListViewModel> bankListQuery = await _bankRepository.GetAll()
                 .Select(item => new BankListViewModel
                 {
                     BankID = item.BankID,
                     BankName = item.BankName
                 })
-                .ToList();
+                .ToListAsync(cancellationToken: cancellationToken);
 
             return bankListQuery;
         }

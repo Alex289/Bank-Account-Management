@@ -1,38 +1,44 @@
 ﻿using BankAccountManagementApi.Application.Interfaces;
 using BankAccountManagementApi.Application.ViewModels;
+using BankAccountManagementApi.Domain.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BankAccountManagementApi.Controllers
 {
     [Route("api/bank")]
     [ApiController]
-    public class BankController : ControllerBase
+    public class BankController : ApiController
     {
         private readonly IBankService _bankService;
-        public BankController(IBankService bankService)
+
+        public BankController(IBankService bankService, INotificationHandler<DomainNotification> notifications) : base(notifications)
         {
             _bankService = bankService;
         }
 
         [HttpPost]
-        public async Task<Guid> NewBank([FromBody] NewBankViewModel values)
+        public async Task<IActionResult> NewBank([FromBody] NewBankViewModel values)
         {
-            return await _bankService.CreateNewBankAsync(values);
+            var result = await _bankService.CreateNewBankAsync(values);
+            return CreateResponse(result);
         }
 
         [HttpGet]
-        public Task<List<BankListViewModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return _bankService.GetAllBanksAsync();
+            var result = await _bankService.GetAllBanksAsync();
+            return Ok(result);
         }
 
         [HttpGet("charge-interests/{bankId}")]
-        public Task<int> ChargeInterests(Guid bankId)
+        public async Task<IActionResult> ChargeInterests(Guid bankId)
         {
-            return _bankService.ChargeInterestsAsync(bankId);
+            var result = await _bankService.ChargeInterestsAsync(bankId);
+            return CreateResponse(result);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.DepositInvalidAccountId, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.EmptyAccountId, validationResult.Errors[0].ErrorCode);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace BankAccountManagementApi.Domain.Tests.Validations
 
             Assert.False(validationResult.IsValid);
 
-            Assert.Equal(ValidationErrorCodes.DepositInvalidAmount, validationResult.Errors[0].ErrorCode);
+            Assert.Equal(ValidationErrorCodes.TooLowAmount, validationResult.Errors[0].ErrorCode);
         }
     }
 }

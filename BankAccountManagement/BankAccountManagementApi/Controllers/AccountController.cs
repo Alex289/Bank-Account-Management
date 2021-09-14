@@ -1,57 +1,65 @@
 ﻿using BankAccountManagementApi.Application.Interfaces;
 using BankAccountManagementApi.Application.ViewModels;
+using BankAccountManagementApi.Domain.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BankAccountManagementApi.Controllers
 {
     [Route("api/account")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : ApiController
     {
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, INotificationHandler<DomainNotification> notifications) : base(notifications)
         {
             _accountService = accountService;
         }
 
         [HttpPost]
-        public Task<Guid> NewAccount([FromBody] NewAccountViewModel values)
+        public async Task<IActionResult> NewAccount([FromBody] NewAccountViewModel values)
         {
-            return _accountService.NewAccountAsync(values);
+            var result = await _accountService.NewAccountAsync(values);
+            return CreateResponse(result);
         }
 
         [HttpGet]
-        public Task<List<AccountListViewModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return _accountService.GetAllAccountsAsync();
+            var result = await _accountService.GetAllAccountsAsync();
+            return Ok(result);
         }
 
         [HttpGet("bank/{bankId}")]
-        public Task<List<AccountListViewModel>> GetByBank(Guid bankId)
+        public async Task<IActionResult> GetByBank(Guid bankId)
         {
-            return _accountService.GetByBankIdAsync(bankId);
+            var result = await _accountService.GetByBankIdAsync(bankId);
+            return Ok(result);
         }
 
         [HttpGet("{accountId}")]
-        public Task<AccountListViewModel> GetAccount(Guid accountId)
+        public async Task<IActionResult> GetAccount(Guid accountId)
         {
-            return _accountService.GetByAccountIdAsync(accountId);
+            var result = await _accountService.GetByAccountIdAsync(accountId);
+            return Ok(result);
         }
 
         [HttpPost("deposit/{accountId}")]
-        public Task<decimal> Deposit(Guid accountId, [FromBody] DepositWithdrawViewModel values)
+        public async Task<IActionResult> Deposit(Guid accountId, [FromBody] DepositWithdrawViewModel values)
         {
-            return _accountService.DepositAsync(accountId, values);
+            var result = await _accountService.DepositAsync(accountId, values);
+            return CreateResponse(result);
         }
 
         [HttpPost("withdraw/{accountId}")]
-        public Task<decimal> Withdraw(Guid accountId, [FromBody] DepositWithdrawViewModel values)
+        public async Task<IActionResult> Withdraw(Guid accountId, [FromBody] DepositWithdrawViewModel values)
         {
-            return _accountService.WithdrawAsync(accountId, values);
+            var result = await _accountService.WithdrawAsync(accountId, values);
+            return CreateResponse(result);
         }
     }
 }

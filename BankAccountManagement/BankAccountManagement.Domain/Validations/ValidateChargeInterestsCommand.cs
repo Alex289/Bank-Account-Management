@@ -15,7 +15,7 @@ namespace BankAccountManagementApi.Domain.Validations
         {
             RuleFor(cmd => cmd.BankId)
                 .NotEmpty()
-                .WithErrorCode(ValidationErrorCodes.ChargeInterestsInvalidBankId);
+                .WithErrorCode(ValidationErrorCodes.EmptyBankId);
         }
     }
 }

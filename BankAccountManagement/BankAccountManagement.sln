@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagement", "BankAccountManagement\BankAccountManagement.csproj", "{23A3272E-81B9-4CF6-967C-7E1E022BBD12}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementTests", "BankAccountManagementTests\BankAccountManagementTests.csproj", "{7F740CDB-87D8-4CD3-99E3-BB25CCB2FCB2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementApi", "BankAccountManagementApi\BankAccountManagementApi.csproj", "{BDF30A9F-C907-4C33-A976-5055776BDADF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementApi.Application", "BankAccountManagementApi.Application\BankAccountManagementApi.Application.csproj", "{4463A079-2DEB-4FC6-8C7A-3B173ABDB717}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementApi.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementApi.Domain.Tests", "BankAccountManagementApi.Domain.Tests\BankAccountManagementApi.Domain.Tests.csproj", "{CAC81CA4-2EA4-488C-88BE-93DD6B901F70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountManagementApi.IntegrationsTests", "BankAccountManagementApi.IntegrationsTests\BankAccountManagementApi.IntegrationsTests.csproj", "{E90994D3-40BB-46D0-890D-E3BDDA450EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountManagementApi.IntegrationsTests", "BankAccountManagementApi.IntegrationsTests\BankAccountManagementApi.IntegrationsTests.csproj", "{E90994D3-40BB-46D0-890D-E3BDDA450EF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{23A3272E-81B9-4CF6-967C-7E1E022BBD12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23A3272E-81B9-4CF6-967C-7E1E022BBD12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23A3272E-81B9-4CF6-967C-7E1E022BBD12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F740CDB-87D8-4CD3-99E3-BB25CCB2FCB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F740CDB-87D8-4CD3-99E3-BB25CCB2FCB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F740CDB-87D8-4CD3-99E3-BB25CCB2FCB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F740CDB-87D8-4CD3-99E3-BB25CCB2FCB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDF30A9F-C907-4C33-A976-5055776BDADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BDF30A9F-C907-4C33-A976-5055776BDADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDF30A9F-C907-4C33-A976-5055776BDADF}.Release|Any CPU.ActiveCfg = Release|Any CPU

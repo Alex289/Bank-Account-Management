@@ -17,7 +17,7 @@ namespace BankAccountManagementApi.Domain.Validations
         {
             RuleFor(cmd => cmd.BankID)
                 .NotEmpty()
-                .WithErrorCode(ValidationErrorCodes.NewAccountInvalidBankId);
+                .WithErrorCode(ValidationErrorCodes.EmptyBankId);
         }
 
         protected void AddRuleForInterestLimit()
@@ -25,8 +25,9 @@ namespace BankAccountManagementApi.Domain.Validations
             RuleFor(cmd => cmd.InterestLimit)
                 .NotEmpty()
                 .Unless(cmd => cmd.Interests == 0)
+                .WithErrorCode(ValidationErrorCodes.EmptyInterestLimit)
                 .InclusiveBetween(-1000, 0)
-                .WithErrorCode(ValidationErrorCodes.NewAccountInvalidInterestLimit);
+                .WithErrorCode(ValidationErrorCodes.BetweenInterestLimit);
         }
 
         protected void AddRuleForInterests()
@@ -34,8 +35,9 @@ namespace BankAccountManagementApi.Domain.Validations
             RuleFor(cmd => cmd.Interests)
                 .NotEmpty()
                 .Unless(cmd => cmd.Interests == 0)
+                .WithErrorCode(ValidationErrorCodes.EmptyInterests)
                 .InclusiveBetween(0, 15)
-                .WithErrorCode(ValidationErrorCodes.NewAccountInvalidInterests);
+                .WithErrorCode(ValidationErrorCodes.BetweenInterests);
         }
     }
 }

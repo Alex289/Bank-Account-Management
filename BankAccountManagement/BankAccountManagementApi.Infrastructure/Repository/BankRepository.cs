@@ -1,7 +1,8 @@
 ﻿using BankAccountManagementApi.Domain.Entities;
-using BankAccountManagementApi.Domain.Repository;
+using BankAccountManagementApi.Domain.Interfaces.Repository;
 using BankAccountManagementApi.Infrastructure.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BankAccountManagementApi.Infrastructure.Repository
 {
@@ -14,10 +15,9 @@ namespace BankAccountManagementApi.Infrastructure.Repository
             _context = context;
         }
 
-        public void AddBank(Bank bank)
+        public async Task AddBankAsync(Bank bank)
         {
-            _context.Bank.Add(bank);
-            _context.SaveChanges();
+            await _context.Bank.AddAsync(bank);
         }
 
         public IQueryable<Bank> GetAll()

@@ -16,15 +16,16 @@ namespace BankAccountManagementApi.Domain.Validations
         {
             RuleFor(cmd => cmd.AccountId)
                 .NotEmpty()
-                .WithErrorCode(ValidationErrorCodes.DepositInvalidAccountId);
+                .WithErrorCode(ValidationErrorCodes.EmptyAccountId);
         }
 
         protected void AddRuleForAmount()
         {
             RuleFor(cmd => cmd.Amount)
                 .NotEmpty()
+                .WithErrorCode(ValidationErrorCodes.EmptyAmount)
                 .GreaterThan(0)
-                .WithErrorCode(ValidationErrorCodes.DepositInvalidAmount);
+                .WithErrorCode(ValidationErrorCodes.TooLowAmount);
         }
     }
 }
